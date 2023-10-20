@@ -87,7 +87,7 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
        
         ws = ws - gamma*grad
 
-    return (ws[0],losses)
+    return (ws,losses)
 
 
 def mean_squared_error_sgd(y, tx, initial_w,max_iters, gamma):
