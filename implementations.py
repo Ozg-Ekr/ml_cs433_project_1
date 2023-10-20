@@ -39,7 +39,7 @@ def compute_gradient(y, tx, w):
    
     # SEE exo2 instruction (eq7) 
     N= y.shape[0]
-    e = y - np.matmul(tx,w)
+    e = y - np.matmul(tx.T,w)
     grad = -(1/N)*(tx.T@e)
     return grad
 
