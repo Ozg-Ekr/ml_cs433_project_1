@@ -79,7 +79,7 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
     """
     # Define parameters to store w and loss
     ws = [initial_w]
-    
+    losses = 0 
     for n_iter in range(max_iters):
         
         grad = compute_gradient(y, tx, ws)
