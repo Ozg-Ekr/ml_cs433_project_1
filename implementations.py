@@ -35,17 +35,34 @@ def compute_gradient(y, tx, w):
         An numpy array of shape (D, ) (same shape as w), containing the gradient of the loss at w.
     """
    
-   
+
     N= y.shape[0]
     e = y - np.matmul(tx,w)
     grad = -(1/N)*(tx.T@e)
     return grad
 
 
+def compute_stoch_gradient(y, tx, w):
+    """Compute a stochastic gradient at w from a data sample batch of size B, where B < N, and their corresponding labels.
+
+    Args:
+        y: numpy array of shape=(B, )
+        tx: numpy array of shape=(B,D)
+        w: numpy array of shape=(D, ). The vector of model parameters.
+
+    Returns:
+        A numpy array of shape (D, ) (same shape as w), containing the stochastic gradient of the loss at w.
+    """
+    N= y.shape[0]
+    e = y - np.matmul(tx,w)
+    stoch_grad = -(1/N)*(tx.T@e)
+    return stoch_grad
 #-----------------------end of helper functions ------------
 
 
 def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
+    #COULD BE MODIFIED TO DIRECTLY NOT STORE w RATHER THAN STORE THEM AND JUST TAKE THE LAST ONE 
+
     """The Gradient Descent (GD) algorithm using the MSE.
 
     Args:
@@ -74,5 +91,39 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
         # store w and loss
         ws.append(w)
         losses.append(loss)
+    return losses[0], ws[0]
 
-    return losses(0), ws(0)
+
+def mean_squared_error_sgd(y, tx, initial_w,max_iters, gamma):
+    """The Stochastic Gradient Descent algorithm (SGD) using MSE with a batch size of 1 
+
+    Args:
+        y: numpy array of shape=(N, )
+        tx: numpy array of shape=(N,D)
+        initial_w: numpy array of shape=(D, ). The initial guess (or the initialization) for the model parameters
+        max_iters: a scalar denoting the total number of iterations of SGD
+        gamma: a scalar denoting the stepsize
+
+    Returns: A MODIFIER 
+        losses: a list of length max_iters containing the loss value (scalar) for each iteration of SGD
+        ws: a list of length max_iters containing the model parameters as numpy arrays of shape (2, ), for each iteration of SGD
+    """
+
+    # Define parameters to store w and loss
+    ws = [initial_w]
+    losses = []
+    w = initial_w
+
+    for n_iter in range(max_iters):
+        stoch_grad = 0 
+        loss = 0 
+        for y_batch,tx_batch in batch_iter(y, tx, 1): 
+            stoch_grad += compute_stoch_gradient(y_batch,tx_batch,w)
+            loss += compute_mse(y, tx, ws[n_iter])
+        
+        w = ws[n_iter] - gamma*stoch_grad
+        ws.append(w)
+        losses.append(loss)
+      
+    return losses[0], ws[0]
+
