@@ -18,9 +18,11 @@ def compute_mse(y,tx,w):
     Returns:
         the value of the loss (a scalar), corresponding to the input parameters w.
     """
+    # SEE personal not from series 2 for the calculations
+
     e = y - np.matmul(tx,w) 
     N = y.shape[0]
-    mse = (1/2*N)*(e.T@e) 
+    mse = (0.5*N)*(e.T@e)  # factor 0.5 to stay consitant with lecture notes
     return mse
 
 def compute_gradient(y, tx, w):
@@ -35,7 +37,7 @@ def compute_gradient(y, tx, w):
         An numpy array of shape (D, ) (same shape as w), containing the gradient of the loss at w.
     """
    
-
+    # SEE exo2 instruction (eq7) 
     N= y.shape[0]
     e = y - np.matmul(tx,w)
     grad = -(1/N)*(tx.T@e)
@@ -61,8 +63,7 @@ def compute_stoch_gradient(y, tx, w):
 
 
 def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
-    #COULD BE MODIFIED TO DIRECTLY NOT STORE w RATHER THAN STORE THEM AND JUST TAKE THE LAST ONE 
-
+   
     """The Gradient Descent (GD) algorithm using the MSE.
 
     Args:
@@ -78,20 +79,15 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
     """
     # Define parameters to store w and loss
     ws = [initial_w]
-    losses = []
-    w = initial_w
+    
     for n_iter in range(max_iters):
         
-        grad = compute_gradient(y, tx, ws[n_iter])
-        loss = compute_mse(y, tx, ws[n_iter])
+        grad = compute_gradient(y, tx, ws)
+        losses = compute_mse(y, tx, ws)
        
-        w = ws[n_iter] - gamma*grad
-        
+        ws = ws - gamma*grad
 
-        # store w and loss
-        ws.append(w)
-        losses.append(loss)
-    return losses[0], ws[0]
+    return (ws[0],losses)
 
 
 def mean_squared_error_sgd(y, tx, initial_w,max_iters, gamma):
