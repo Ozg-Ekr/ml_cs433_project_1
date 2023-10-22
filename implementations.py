@@ -88,7 +88,7 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
         losses = compute_mse(y, tx, ws)
         grad = compute_gradient(y, tx, ws)
         
-        print("ws shape : ")
+        #print("ws shape : ")
        
         ws = ws - gamma*grad
 
