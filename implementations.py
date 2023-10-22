@@ -1,7 +1,6 @@
 import numpy as np 
 
 
-
 #-------------------------- helper functions ----------------------
 # MAY NEED TO MOVE THEM IN A SEPERATE FILE 
 
@@ -20,7 +19,7 @@ def compute_mse(y,tx,w):
     """
     # SEE personal not from series 2 for the calculations
 
-    e = y - np.matmul(tx,w) 
+    e = y - np.matmul(tx,w)
     N = y.shape[0]
     mse = (0.5*N)*(e.T@e)  # factor 0.5 to stay consitant with lecture notes
     return mse
@@ -78,16 +77,24 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
         ws: a list of length max_iters containing the model parameters as numpy arrays of shape (D, ), for each iteration of GD
     """
     # Define parameters to store w and loss
-    ws = [initial_w]
+
+    #print("Ok")
+
+    ws = initial_w
+    #print(ws.shape , " initila ws shape")
     losses = 0 
     for n_iter in range(max_iters):
         
-        grad = compute_gradient(y, tx, ws)
         losses = compute_mse(y, tx, ws)
+        grad = compute_gradient(y, tx, ws)
+        
+        print("ws shape : ")
        
         ws = ws - gamma*grad
 
     return (ws,losses)
+
+
 
 
 def mean_squared_error_sgd(y, tx, initial_w,max_iters, gamma):
@@ -136,3 +143,21 @@ def logistic_regression(y, tx, initial_w,max_iters, gamma):
 
 def reg_logistic_regression(y, tx, lambda_,initial_w, max_iters, gamma):
     0
+
+
+
+#TEST PERSO 
+y = np.array([0,1,2])
+tx=np.array([[2,3,4],[4,5,4],[2,4,1]])
+w_init = np.array([2,4.5,3])
+
+e = y - np.matmul(tx,w_init)
+N = y.shape[0]
+mse = compute_mse(y,tx,w_init)
+#print(mse)
+
+grad = compute_gradient(y,tx,w_init)
+#print(grad)
+
+gd = mean_squared_error_gd(y,tx,w_init,100,0.01)
+##########################
