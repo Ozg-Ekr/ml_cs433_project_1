@@ -172,13 +172,10 @@ def mean_squared_error_sgd(y, tx, initial_w,max_iters, gamma):
 
 
     for n_iter in range(max_iters):
-        #stoch_grad = 0 
-        #loss = 0 
 
         for y_batch,tx_batch in batch_iter(y, tx, batch_size): 
             stoch_grad = compute_stoch_gradient(y_batch,tx_batch,ws)
             
-        
         ws = ws - gamma*stoch_grad
         losses = compute_mse(y, tx, ws)
       
