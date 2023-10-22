@@ -39,7 +39,7 @@ def compute_gradient(y, tx, w):
    
     # SEE exo2 instruction (eq7) 
     N= y.shape[0]
-    e = y - np.matmul(tx.T,w)
+    e = y - np.matmul(tx,w)
     grad = -(1/N)*(tx.T@e)
     return grad
 
@@ -123,3 +123,16 @@ def mean_squared_error_sgd(y, tx, initial_w,max_iters, gamma):
       
     return losses[0], ws[0]
 
+
+
+def least_squares(y, tx): 
+    0
+
+def ridge_regression(y, tx, lambda_):
+    0
+
+def logistic_regression(y, tx, initial_w,max_iters, gamma):
+    0
+
+def reg_logistic_regression(y, tx, lambda_,initial_w, max_iters, gamma):
+    0
