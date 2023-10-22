@@ -76,9 +76,6 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
         losses: a list of length max_iters containing the loss value (scalar) for each iteration of GD
         ws: a list of length max_iters containing the model parameters as numpy arrays of shape (D, ), for each iteration of GD
     """
-    # Define parameters to store w and loss
-
-    #print("Ok")
 
     ws = initial_w
     losses = compute_mse(y, tx, ws) 
@@ -140,22 +137,3 @@ def logistic_regression(y, tx, initial_w,max_iters, gamma):
 def reg_logistic_regression(y, tx, lambda_,initial_w, max_iters, gamma):
     0
 
-
-
-#TEST PERSO 
-
-
-y = np.array([0.1, 0.3, 0.5])
-tx = np.array([[2.3, 3.2],[1. , 0.1],[1.4, 2.3]])
-initial_w = np.array([0.5, 1. ])
-#e = y - np.matmul(tx,w_init)
-#N = y.shape[0]
-#mse = compute_mse(y,tx,w_init)
-#print(mse)
-
-#grad = compute_gradient(y,tx,w_init)
-#print(grad)
-
-gd = mean_squared_error_gd(y,tx,initial_w,200,0.01)
-print(gd)
-##########################
