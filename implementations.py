@@ -81,17 +81,13 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
     #print("Ok")
 
     ws = initial_w
-    #print(ws.shape , " initila ws shape")
     losses = compute_mse(y, tx, ws) 
     for n_iter in range(max_iters):
         
-        losses = compute_mse(y, tx, ws)
         grad = compute_gradient(y, tx, ws)
-        
-        #print("ws shape : ")
        
         ws = ws - gamma*grad
-
+        losses = compute_mse(y, tx, ws)
     return (ws,losses)
 
 
@@ -151,7 +147,7 @@ def reg_logistic_regression(y, tx, lambda_,initial_w, max_iters, gamma):
 
 y = np.array([0.1, 0.3, 0.5])
 tx = np.array([[2.3, 3.2],[1. , 0.1],[1.4, 2.3]])
-w_init = np.array([0.413044, 0.875757])
+initial_w = np.array([0.5, 1. ])
 #e = y - np.matmul(tx,w_init)
 #N = y.shape[0]
 #mse = compute_mse(y,tx,w_init)
@@ -160,6 +156,6 @@ w_init = np.array([0.413044, 0.875757])
 #grad = compute_gradient(y,tx,w_init)
 #print(grad)
 
-gd = mean_squared_error_gd(y,tx,w_init,0,0.01)
+gd = mean_squared_error_gd(y,tx,initial_w,200,0.01)
 print(gd)
 ##########################
