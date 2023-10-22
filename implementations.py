@@ -21,7 +21,7 @@ def compute_mse(y,tx,w):
 
     e = y - np.matmul(tx,w)
     N = y.shape[0]
-    mse = (0.5*N)*(e.T@e)  # factor 0.5 to stay consitant with lecture notes
+    mse = (0.5*(1/N))*(e.T@e)  # factor 0.5 to stay consitant with lecture notes
     return mse
 
 def compute_gradient(y, tx, w):
@@ -82,7 +82,7 @@ def mean_squared_error_gd(y, tx, initial_w,max_iters, gamma):
 
     ws = initial_w
     #print(ws.shape , " initila ws shape")
-    losses = 0 
+    losses = compute_mse(y, tx, ws) 
     for n_iter in range(max_iters):
         
         losses = compute_mse(y, tx, ws)
@@ -147,17 +147,19 @@ def reg_logistic_regression(y, tx, lambda_,initial_w, max_iters, gamma):
 
 
 #TEST PERSO 
-y = np.array([0,1,2])
-tx=np.array([[2,3,4],[4,5,4],[2,4,1]])
-w_init = np.array([2,4.5,3])
 
-e = y - np.matmul(tx,w_init)
-N = y.shape[0]
-mse = compute_mse(y,tx,w_init)
+
+y = np.array([0.1, 0.3, 0.5])
+tx = np.array([[2.3, 3.2],[1. , 0.1],[1.4, 2.3]])
+w_init = np.array([0.413044, 0.875757])
+#e = y - np.matmul(tx,w_init)
+#N = y.shape[0]
+#mse = compute_mse(y,tx,w_init)
 #print(mse)
 
-grad = compute_gradient(y,tx,w_init)
+#grad = compute_gradient(y,tx,w_init)
 #print(grad)
 
-gd = mean_squared_error_gd(y,tx,w_init,100,0.01)
+gd = mean_squared_error_gd(y,tx,w_init,0,0.01)
+print(gd)
 ##########################
